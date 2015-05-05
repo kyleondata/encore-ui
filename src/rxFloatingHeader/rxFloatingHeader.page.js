@@ -25,7 +25,7 @@ exports.rxFloatingHeader = {
       return a promise representing the y value of the resulting (or provided) location object.
     */
     transformLocation: function (elementOrLocation, attribute) {
-        if (protractor.promise.isPromise(elementOrLocation)) {
+        if (_.isFunction(elementOrLocation.getLocation)) {
             var elem = elementOrLocation;
             return elem.getLocation().then(function (loc) {
                 return loc[attribute];
