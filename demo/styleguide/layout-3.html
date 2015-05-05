@@ -1,13 +1,14 @@
 <rx-page title="'Layout 3'" subtitle="'Sample Create Page'">
 
 <form class="rx-form clear">
+  <div class="form-area">
     <rx-form-item label="Server Name">
         <input type="text" id="serverName" required>
     </rx-form-item>
 
     <rx-form-item label="Text area">
         <textarea rows="10" cols="50"></textarea>
-    </rx-form-item>    
+    </rx-form-item>
 
     <rx-form-item label="Region">
         <span class="field-select">
@@ -24,8 +25,8 @@
     <rx-form-item label="Monthly Cost" prefix="$" suffix="million">
         <input type="number" ng-model="volume.cost" />
     </rx-form-item>
-
-<tabset class="clearfix clear">
+  </div>
+<tabset class="clearfix clear tab-area">
     <tab heading="Tab 1">
     <!-- Using the controller from the rxForm docs .js file -->
         <div ng-controller="rxFormDemoCtrl">
@@ -58,15 +59,15 @@
             <td>1aa2bfa9-de8d-42f7-9f6d-e6437855b36e</td>
             <td>Lorem ipsum dolor sit amet</td>
             <td>1234567890</td>
-        </tr>        
+        </tr>
         <tr>
             <td>Lorem ipsum</td>
             <td>1aa2bfa9-de8d-42f7-9f6d-e6437855b36e</td>
             <td>Lorem ipsum dolor sit amet</td>
             <td>1234567890</td>
-        </tr>        
+        </tr>
     </tbody>
-</table>        
+</table>
     </tab>
 </tabset>
 

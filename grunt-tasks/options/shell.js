@@ -18,7 +18,20 @@ module.exports = function (grunt) {
                       '-o <%= config.docs %>/rx-page-objects/index.html --gfm'].join(' ')
         },
 
+        screenshotsClone: {
+            command: 'git submodule add -f git@github.com:rackerlabs/encore-ui-screenshots.git screenshots;',
             options: {
+                stdout: true
+            }
+        },
+
+        screenshotsPush: {
+            command: ['ENCORE_BRANCH=`git rev-parse --abbrev-ref HEAD`;',
+                      'cd screenshots; git checkout -b $ENCORE_BRANCH;',
+                      'git add -A; git commit -m "chore(screenshots): $TRAVIS_REPO_SLUG#$TRAVIS_PULL_REQUEST";',
+                      'git push origin $ENCORE_BRANCH'].join(' '),
+            options: {
+                stdout: true
             }
         },
 
