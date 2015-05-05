@@ -1,25 +1,30 @@
 language: node_js
 node_js:
 - '0.10'
-before_install: npm install -g grunt-cli bower mocha@1.21.5
+before_install:
+- npm install -g grunt-cli bower
+- sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++
 install:
 - travis_retry npm install
 - bower install
-- ./node_modules/protractor/bin/webdriver-manager update --standalone
+- ./node_modules/.bin/webdriver-manager update --standalone
+- grunt screenshots:clone
 before_script:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
 - bower install
 - grunt connect:keepalive &
-- nohup bash -c "./node_modules/protractor/bin/webdriver-manager start 2>&1 &"
+- nohup bash -c "./node_modules/.bin/webdriver-manager start 2>&1 &"
 - sleep 5 # wait for selenium server to actually come up
 script:
 - grunt
 - grunt test:full
-- ./node_modules/protractor/bin/protractor protractor.conf.js
+- ./node_modules/.bin/protractor protractor.conf.js
 - grunt karma:minified
 after_success:
 - grunt coveralls
+- grunt screenshots:push
+- grunt screenshots:pr
 env:
   global:
   - secure: S6sdJYgRgdlwGR14hTH8zYSkF+bvjKiCEpsxHdiQLJL6T9hgByObdkpiOiKnt4Y2uuAfY0JUKsM/TG4apN22mH0R+xafmYx7+uMMEcBDB5EWJtohdaCkg/GgRFRTs5FkkJKBS+lIObDjjRyeGFh2uGjyXTTgtp+m1FIFj3mOQlw=

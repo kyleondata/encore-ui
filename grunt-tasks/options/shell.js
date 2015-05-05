@@ -1,4 +1,12 @@
 /*jshint node:true*/
+
+// keep a fork for screenshots since Travis has to clone the submodule every time
+// if every PR builds a new branch and makes a new PR, the screenshot count can grow very large
+// this way, the only screenshots that are pulled in are the ones merged into master
+//  and all of the stale stuff that never got merged sits in a fork somewhere
+var screenshotPullTemplate = 'https://' + process.env.ghToken + '@github.com/rackerlabs/encore-ui-screenshots.git';
+var screenshotPushTemplate = 'https://' + process.env.ghToken + '@github.com/comeatmebro/encore-ui-screenshots.git';
+
 module.exports = function (grunt) {
     return {
         rxPageObjects: {
@@ -18,8 +26,39 @@ module.exports = function (grunt) {
                       '-o <%= config.docs %>/rx-page-objects/index.html --gfm'].join(' ')
         },
 
+        screenshotsClone: {
+            command: ['[ ${TRAVIS_SECURE_ENV_VARS} = "true" ] &&',
+                      'git submodule add -f', screenshotPullTemplate, 'screenshots > /dev/null 2>&1;'].join(' '),
             options: {
+                stdout: false
             }
+        },
+
+        screenshotsPush: {
+            command: ['[ ${TRAVIS_SECURE_ENV_VARS} = "false" ] && exit 0;',
+                      '[ ${TRAVIS_BRANCH} = "false" ] && exit 0;',
+                      'ENCORE_SHA=`git rev-parse HEAD | cut -c-7`;',
+                      'BRANCH=SHA-$ENCORE_SHA;',
+                      'cd screenshots; git checkout -b $BRANCH;',
+                      'git config user.email "comeatmebro@users.noreply.github.com";',
+                      'git config user.name "comeatmebro";',
+                      'NO_COMMIT="0";', // assume there's some screenshots
+                      'git add -A; git commit -m "chore(screenshots): Visual diff against $ENCORE_SHA";',
+                      '[ $? = "1" ] && NO_COMMIT="1" && exit 0;', // skip if nothing committed
+                      'git push "' + screenshotPushTemplate + '" $BRANCH > /dev/null 2>&1;'].join(' '),
+            options: {
+                stdout: false
+            }
+        },
+
+        screenshotsPR: {
+            command: ['[ ${TRAVIS_SECURE_ENV_VARS} = "false" ] && exit 0;',
+                      '[ ${TRAVIS_BRANCH} = "false" ] && exit 0;',
+                      'ENCORE_SHA=`git rev-parse HEAD | cut -c-7`;',
+                      'BRANCH=SHA-$ENCORE_SHA;',
+                      '[ $NO_COMMIT = "1" ] && exit 0;',
+                      'node utils/screenshots-pr.js',
+                      '${TRAVIS_REPO_SLUG}#${TRAVIS_PULL_REQUEST} comeatmebro:$BRANCH > /dev/null 2>&1;'].join(' ')
         },
 
         npmPublish: {

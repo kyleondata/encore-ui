@@ -49,6 +49,7 @@
         "protractor": true,
         "require": false,
         "runs": true,
+        "screenshot": true,
         "sinon": false,
         "waitsFor": true,
         "xdescribe": true,

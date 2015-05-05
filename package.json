@@ -68,7 +68,8 @@
     "marked": "^0.3.3",
     "mocha": "^2.1.0",
     "moment": "~2.9.0",
-    "protractor": "1.8.0",
-    "semver": "~4.2.0"
+    "protractor": "^2.0.0",
+    "semver": "~4.2.0",
+    "snappit-mocha-protractor": "0.0.6"
   }
 }
