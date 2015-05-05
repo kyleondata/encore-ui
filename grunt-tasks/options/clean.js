@@ -13,8 +13,5 @@ module.exports = {
     },
     rxPageObjects: {
         src: ['utils/rx-page-objects/*.tgz']
-    },
-    wraith: {
-        src: ['<%= config.wraith %>/shots', '<%= config.wraith %>/tmp']
     }
 };
