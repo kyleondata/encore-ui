@@ -7,7 +7,6 @@ module.exports = {
                    // different variable in case they're later changed)
     exportableStyles: '<%= config.app %>/styles',
     bower: 'bower',
-    wraith: 'wraith',
     liveReloadPage: require('connect-livereload')({ port: 1337 }),
     proxyRequest: require('grunt-connect-proxy/lib/utils').proxyRequest,
     modRewrite: require('connect-modrewrite'),

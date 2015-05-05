@@ -20,9 +20,6 @@ script:
 - grunt karma:minified
 after_success:
 - grunt coveralls
-# only run this if it's a pull request (and yeah, it's a bit ugly, but it works)
-- '[ "${TRAVIS_PULL_REQUEST}" != "false" ] && gem install wraith && grunt wraith || false'
-- '[ "${TRAVIS_PULL_REQUEST}" != "false" ] && grunt cloudfiles:wraith --pr ${TRAVIS_PULL_REQUEST} && node utils/gh-pr-wraith.js ${TRAVIS_PULL_REQUEST} || false'
 env:
   global:
   - secure: lBNmtcRYcHepXJsVsrQ+pr8yyrgN/1be7cDoTltXIxMq9WsTbm75Ypc4/rHhwO7K8cRMVbqEcMYbv6wZDGnpjL9z/nxTv14dS8S6wcIrLxGRwUPQ3McUqwOOrs7k2c0LiLwkJsjBBzBo+g52WY7rjPcOCXBBluZ98lar7gzP56c=
