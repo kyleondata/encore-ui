@@ -42,16 +42,5 @@ module.exports = {
             // Remove '/dist/build/' from path
             'stripcomponents': 2
         }]
-    },
-    wraith: {
-        'user': 'encorecloudfiles',
-        'key': process.env.cloudFilesApi,
-        'region': 'IAD',
-        'upload': [{
-            'container': 'encore-ui-wraith',
-            'src': '<%= config.wraith %>/shots/**/*',
-            'dest': '/<%= grunt.option("pr") %>/',
-            'stripcomponents': 2
-        }]
     }
 };

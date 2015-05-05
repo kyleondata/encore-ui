@@ -18,16 +18,6 @@ module.exports = function (grunt) {
                       '-o <%= config.docs %>/rx-page-objects/index.html --gfm'].join(' ')
         },
 
-        wraith: {
-            command: 'wraith capture config',
-            options: {
-                stdout: true,
-                execOptions: {
-                    cwd: '<%= config.wraith %>'
-                }
-            }
-        },
-
         npmPublish: {
             command: 'npm publish ./rx-page-objects',
             options: {
