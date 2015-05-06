@@ -1,4 +1,6 @@
 /*jshint node:true*/
+var screenshotRepoTemplate = 'https://${SCREENSHOT_TOKEN}@rackerlabs/encore-ui-screenshots.git';
+
 module.exports = function (grunt) {
     return {
         rxPageObjects: {
@@ -19,7 +21,7 @@ module.exports = function (grunt) {
         },
 
         screenshotsClone: {
-            command: 'git submodule add -f git@github.com:rackerlabs/encore-ui-screenshots.git screenshots;',
+            command: ['git submodule add -f', screenshotRepoTemplate, 'screenshots;'].join(' '),
             options: {
                 stdout: true
             }
@@ -27,9 +29,10 @@ module.exports = function (grunt) {
 
         screenshotsPush: {
             command: ['ENCORE_BRANCH=`git rev-parse --abbrev-ref HEAD`;',
-                      'cd screenshots; git checkout -b $ENCORE_BRANCH;',
-                      'git add -A; git commit -m "chore(screenshots): $TRAVIS_REPO_SLUG#$TRAVIS_PULL_REQUEST";',
-                      'git push origin $ENCORE_BRANCH'].join(' '),
+                      'ENCORE_SHA=`git rev-parse HEAD | cut -c-7`;',
+                      'cd screenshots; git checkout -b $ENCORE_BRANCH-$ENCORE_SHA;',
+                      'git add -A; git commit -m "chore(screenshots): ${TRAVIS_REPO_SLUG}#${TRAVIS_PULL_REQUEST}";',
+                      'git push "' + screenshotRepoTemplate + '" $ENCORE_BRANCH'].join(' '),
             options: {
                 stdout: true
             }
