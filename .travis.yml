@@ -2,8 +2,8 @@ language: node_js
 node_js:
 - '0.10'
 before_install:
- - npm install -g grunt-cli bower
- - sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++
+- npm install -g grunt-cli bower
+- sudo apt-get install libcairo2-dev libjpeg8-dev libpango1.0-dev libgif-dev build-essential g++
 install:
 - travis_retry npm install
 - bower install
@@ -28,8 +28,9 @@ env:
   global:
   - secure: lBNmtcRYcHepXJsVsrQ+pr8yyrgN/1be7cDoTltXIxMq9WsTbm75Ypc4/rHhwO7K8cRMVbqEcMYbv6wZDGnpjL9z/nxTv14dS8S6wcIrLxGRwUPQ3McUqwOOrs7k2c0LiLwkJsjBBzBo+g52WY7rjPcOCXBBluZ98lar7gzP56c=
   - secure: XvQ6cnwELTp1odgqXaLeF0n39Q9sOsVx6zICnBfayHkmQxPOmTNnvip83vA7MyhwhlTn+nFqr7PWkqLc0CIKAoWdwHhfwMAI77aJWeasPaeywvZ7L+eZ7x4JrDt7jRo7SwzmFivHgGh9RtCMltaJWwvqszRPWwMFxcj0zoetKUI=
-  - secure: "S6sdJYgRgdlwGR14hTH8zYSkF+bvjKiCEpsxHdiQLJL6T9hgByObdkpiOiKnt4Y2uuAfY0JUKsM/TG4apN22mH0R+xafmYx7+uMMEcBDB5EWJtohdaCkg/GgRFRTs5FkkJKBS+lIObDjjRyeGFh2uGjyXTTgtp+m1FIFj3mOQlw="
-  - secure: "VXPSXFfvMXvybjnC3RUUDm6xLe1rHroYRKQjoXFcom7ukvnwDOSmA7+PShGU13Liv10ZYp7jk2nmzq54BQD21cr5hV5eVYKCZD3UYe4O4ALmEYdz3v2GdZsBOmwKZ5JVoh7ODWT/xQ0C3mTploQvlg+IxS+0zrX6RGIMOTmuBjE="
+  - secure: S6sdJYgRgdlwGR14hTH8zYSkF+bvjKiCEpsxHdiQLJL6T9hgByObdkpiOiKnt4Y2uuAfY0JUKsM/TG4apN22mH0R+xafmYx7+uMMEcBDB5EWJtohdaCkg/GgRFRTs5FkkJKBS+lIObDjjRyeGFh2uGjyXTTgtp+m1FIFj3mOQlw=
+  - secure: VXPSXFfvMXvybjnC3RUUDm6xLe1rHroYRKQjoXFcom7ukvnwDOSmA7+PShGU13Liv10ZYp7jk2nmzq54BQD21cr5hV5eVYKCZD3UYe4O4ALmEYdz3v2GdZsBOmwKZ5JVoh7ODWT/xQ0C3mTploQvlg+IxS+0zrX6RGIMOTmuBjE=
+  - secure: TTzzkbuMmQbdonRlzMCRz9FSI3PN/SsCSkzkAwyelHFDOFuGPlfI4Y+5qE3XJFBWCXzjl+NYmIrHq1Iv8tlt+zSleCQlgdHZ5jV2h8/19YMkVQ2NOFS0k0wfQJL3PuN/mwSEdXuG0CNFSAMEPVSISIkKZLM5rpU9qc/SBBq6AYY=
 notifications:
   email: false
   slack:
