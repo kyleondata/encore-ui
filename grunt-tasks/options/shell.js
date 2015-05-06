@@ -38,6 +38,14 @@ module.exports = function (grunt) {
             }
         },
 
+        screenshotsPR: {
+            command: ['ENCORE_BRANCH=`git rev-parse --abbrev-ref HEAD`;',
+                      'ENCORE_SHA=`git rev-parse HEAD | cut -c-7`;',
+                      'node utils/screenshots-pr.js',
+                      '${TRAVIS_REPO_SLUG}#${TRAVIS_PULL_REQUEST}',
+                      '$ENCORE_BRANCH-$ENCORE_SHA;'].join(' ')
+        },
+
         npmPublish: {
             command: 'npm publish ./rx-page-objects',
             options: {
