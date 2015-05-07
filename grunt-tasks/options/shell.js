@@ -1,5 +1,5 @@
 /*jshint node:true*/
-var screenshotRepoTemplate = 'https://' + process.env.ghToken + '@rackerlabs/encore-ui-screenshots.git';
+var screenshotRepoTemplate = 'https://' + process.env.ghToken + '@github.com/rackerlabs/encore-ui-screenshots.git';
 
 module.exports = function (grunt) {
     return {
