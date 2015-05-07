@@ -1,5 +1,5 @@
 /*jshint node:true*/
-var screenshotRepoTemplate = 'https://${SCREENSHOT_TOKEN}@rackerlabs/encore-ui-screenshots.git';
+var screenshotRepoTemplate = 'https://' + process.env.ghToken + '@rackerlabs/encore-ui-screenshots.git';
 
 module.exports = function (grunt) {
     return {
@@ -23,7 +23,7 @@ module.exports = function (grunt) {
         screenshotsClone: {
             command: ['git submodule add -f', screenshotRepoTemplate, 'screenshots;'].join(' '),
             options: {
-                stdout: true
+                stdout: false
             }
         },
 
@@ -34,7 +34,7 @@ module.exports = function (grunt) {
                       'git add -A; git commit -m "chore(screenshots): ${TRAVIS_REPO_SLUG}#${TRAVIS_PULL_REQUEST}";',
                       'git push "' + screenshotRepoTemplate + '" $ENCORE_BRANCH'].join(' '),
             options: {
-                stdout: true
+                stdout: false
             }
         },
 
