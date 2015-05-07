@@ -1,5 +1,11 @@
 /*jshint node:true*/
-var screenshotRepoTemplate = 'https://' + process.env.ghToken + '@github.com/rackerlabs/encore-ui-screenshots.git';
+
+// keep a fork for screenshots since Travis has to clone the submodule every time
+// if every PR builds a new branch and makes a new PR, the screenshot count can grow very large
+// this way, the only screenshots that are pulled in are the ones merged into master
+//  and all of the stale stuff that never got merged sits in a fork somewhere
+var screenshotPullTemplate = 'https://' + process.env.ghToken + '@github.com/rackerlabs/encore-ui-screenshots.git';
+var screenshotPushTemplate = 'https://' + process.env.ghToken + '@github.com/comeatmebro/encore-ui-screenshots.git';
 
 module.exports = function (grunt) {
     return {
@@ -21,29 +27,35 @@ module.exports = function (grunt) {
         },
 
         screenshotsClone: {
-            command: ['git submodule add -f', screenshotRepoTemplate, 'screenshots;'].join(' '),
+            command: ['[ ${TRAVIS_SECURE_ENV_VARS} = "true" ] &&',
+                      'git submodule add -f', screenshotPullTemplate, 'screenshots;'].join(' '),
             options: {
                 stdout: false
             }
         },
 
         screenshotsPush: {
-            command: ['ENCORE_BRANCH=`git rev-parse --abbrev-ref HEAD`;',
+            command: ['[ ${TRAVIS_SECURE_ENV_VARS} = "true" ] &&',
+                      '[ ${TRAVIS_BRANCH} != "false" ] &&',
                       'ENCORE_SHA=`git rev-parse HEAD | cut -c-7`;',
-                      'cd screenshots; git checkout -b $ENCORE_BRANCH-$ENCORE_SHA;',
+                      'BRANCH=${TRAVIS_BRANCH}-$ENCORE_SHA',
+                      'cd screenshots; git checkout -b $BRANCH;',
+                      'git config user.email "freddy.knuth@rackspace.com"',
+                      'git config user.name "comeatmebro"',
                       'git add -A; git commit -m "chore(screenshots): ${TRAVIS_REPO_SLUG}#${TRAVIS_PULL_REQUEST}";',
-                      'git push "' + screenshotRepoTemplate + '" $ENCORE_BRANCH'].join(' '),
+                      'git push "' + screenshotPushTemplate + '" $BRANCH'].join(' '),
             options: {
                 stdout: false
             }
         },
 
         screenshotsPR: {
-            command: ['ENCORE_BRANCH=`git rev-parse --abbrev-ref HEAD`;',
+            command: ['[ ${TRAVIS_SECURE_ENV_VARS} = "true" ] &&',
+                      '[ ${TRAVIS_BRANCH} != "false" ] &&',
                       'ENCORE_SHA=`git rev-parse HEAD | cut -c-7`;',
+                      'BRANCH=${TRAVIS_BRANCH}-$ENCORE_SHA',
                       'node utils/screenshots-pr.js',
-                      '${TRAVIS_REPO_SLUG}#${TRAVIS_PULL_REQUEST}',
-                      '$ENCORE_BRANCH-$ENCORE_SHA;'].join(' ')
+                      '${TRAVIS_REPO_SLUG}#${TRAVIS_PULL_REQUEST} comeatmebro:$BRANCH;'].join(' ')
         },
 
         npmPublish: {
