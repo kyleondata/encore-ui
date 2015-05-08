@@ -38,11 +38,11 @@ module.exports = function (grunt) {
             command: ['[ ${TRAVIS_SECURE_ENV_VARS} = "false" ] && exit 0;',
                       '[ ${TRAVIS_BRANCH} = "false" ] && exit 0;',
                       'ENCORE_SHA=`git rev-parse HEAD | cut -c-7`;',
-                      'BRANCH=${TRAVIS_BRANCH}-$ENCORE_SHA;',
+                      'BRANCH=SHA-$ENCORE_SHA;',
                       'cd screenshots; git checkout -b $BRANCH;',
-                      'git config user.email "freddy.knuth@rackspace.com";',
+                      'git config user.email "comeatmebro@users.noreply.github.com";',
                       'git config user.name "comeatmebro";',
-                      'git add -A; git commit -m "chore(screenshots): ${TRAVIS_REPO_SLUG}#${TRAVIS_PULL_REQUEST}";',
+                      'git add -A; git commit -m "chore(screenshots): Visual diff against $ENCORE_SHA";',
                       'git push "' + screenshotPushTemplate + '" $BRANCH'].join(' '),
             options: {
                 stdout: false
@@ -53,7 +53,7 @@ module.exports = function (grunt) {
             command: ['[ ${TRAVIS_SECURE_ENV_VARS} = "false" ] && exit 0;',
                       '[ ${TRAVIS_BRANCH} = "false" ] && exit 0;',
                       'ENCORE_SHA=`git rev-parse HEAD | cut -c-7`;',
-                      'BRANCH=${TRAVIS_BRANCH}-$ENCORE_SHA;',
+                      'BRANCH=SHA-$ENCORE_SHA;',
                       'node utils/screenshots-pr.js',
                       '${TRAVIS_REPO_SLUG}#${TRAVIS_PULL_REQUEST} comeatmebro:$BRANCH;'].join(' ')
         },
