@@ -43,7 +43,7 @@ module.exports = function (grunt) {
                       'git config user.email "comeatmebro@users.noreply.github.com";',
                       'git config user.name "comeatmebro";',
                       'git add -A; git commit -m "chore(screenshots): Visual diff against $ENCORE_SHA";',
-                      'git push "' + screenshotPushTemplate + '" $BRANCH > /dev/null 2>&1'].join(' '),
+                      'git push "' + screenshotPushTemplate + '" $BRANCH > /dev/null 2>&1;'].join(' '),
             options: {
                 stdout: false
             }
@@ -55,7 +55,7 @@ module.exports = function (grunt) {
                       'ENCORE_SHA=`git rev-parse HEAD | cut -c-7`;',
                       'BRANCH=SHA-$ENCORE_SHA;',
                       'node utils/screenshots-pr.js',
-                      '${TRAVIS_REPO_SLUG}#${TRAVIS_PULL_REQUEST} comeatmebro:$BRANCH; > /dev/null 2>&1'].join(' ')
+                      '${TRAVIS_REPO_SLUG}#${TRAVIS_PULL_REQUEST} comeatmebro:$BRANCH > /dev/null 2>&1;'].join(' ')
         },
 
         npmPublish: {

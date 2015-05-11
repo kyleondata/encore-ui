@@ -24,16 +24,10 @@ var options = {
 
 var req = https.request(options, function (res) {
     if (res.statusCode !== 201) {
-        console.error('statusCode: ', res.statusCode);
-        console.error('headers: ', res.headers);
         process.exit(1);
     }
 });
 
 req.write(JSON.stringify(data));
-
-req.on('error', function (e) {
-    console.error(e);
-});
 
 req.end();
