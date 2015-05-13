@@ -42,7 +42,9 @@ module.exports = function (grunt) {
                       'cd screenshots; git checkout -b $BRANCH;',
                       'git config user.email "comeatmebro@users.noreply.github.com";',
                       'git config user.name "comeatmebro";',
+                      'NO_COMMIT="0";', // assume there's some screenshots
                       'git add -A; git commit -m "chore(screenshots): Visual diff against $ENCORE_SHA";',
+                      '[ $? = "1" ] && NO_COMMIT="1" && exit 0;', // skip if nothing committed
                       'git push "' + screenshotPushTemplate + '" $BRANCH > /dev/null 2>&1;'].join(' '),
             options: {
                 stdout: false
@@ -54,6 +56,7 @@ module.exports = function (grunt) {
                       '[ ${TRAVIS_BRANCH} = "false" ] && exit 0;',
                       'ENCORE_SHA=`git rev-parse HEAD | cut -c-7`;',
                       'BRANCH=SHA-$ENCORE_SHA;',
+                      '[ $NO_COMMIT = "1" ] && exit 0;',
                       'node utils/screenshots-pr.js',
                       '${TRAVIS_REPO_SLUG}#${TRAVIS_PULL_REQUEST} comeatmebro:$BRANCH > /dev/null 2>&1;'].join(' ')
         },
