@@ -1,6 +1,6 @@
 # How to contribute
 
-We want to keep it as easy as possible to contribute changes Encore. There are a few guidelines that we need to follow so that we can have a chance of keeping on top of things.
+We want to keep it as easy as possible to contribute changes Encore, while making sure not to overburden the core EncoreUI team. There are a few guidelines that we need to follow so that we can have a chance of keeping on top of things.
 
 ## Bugs & Issues
 
@@ -10,24 +10,68 @@ When submiting a bug report, please **include a set of steps to reproduce the is
 
 ## Adding/Updating Code
 
-If you haven't already, let the Racker Tools team know what your plans are. This is important so that time isn't spent by separate teams doing the same thing, and so that the team can get an initial round of feedback in before coding starts.
+If you haven't already, let the EncoreUI team know what your plans are. This is important so that time isn't spent by separate teams doing the same thing, and so that the team can get an initial round of feedback in before coding starts.
 
-### Criteria for New Additions
 
-New additions to the framework are always encouraged. Here are some loose guidelines that new components should meet:
+## PR Types:
 
-1. The component is re-usable. Multiple projects have a need for it.
-3. Requirements are well defined and documented.
-4. If code has been written, it meets our standards (or is close enough for an easy update).
-  - If code hasn’t been written, developers are available to write it (if not, make the suggestion via a Github Issue and we can pick up the work as time permits).
-5. It's specific to EncoreUI. It matches the EncoreUI style. It doesn't require a large new framework.
-6. There isn't already a design pattern for it. The functionality doesn't already exist.
+There are a few typical types of Pull Requests that we see:
 
-When in doubt about fit, ask in the EncoreUI chat room or open a new GitHub issue.
+* New Components
+* DO NOT MERGE - Reserved for prototype work
+* Styles
+* Docs
+* Bug Fixes
+* Component Revisions - Update to the style or interaction
+* Deprecations
+
+The most complex PRs are usually "New Components". We've written up our criteria for a New Component PR. This is based on what we've found works best for our team, to minimize the time spent reviewing PRs.
+
+Currently, when adding a new component, our most [precious](https://dl.dropboxusercontent.com/u/2384988/onering.jpg) resource is the time of our designers. We want to ensure that the PR process is as streamlined for them as possible, and this is made explicit below.
+
+Note that while this process is listed as for "New Components", it also has implication for "Styles" PRs, "Component Revisions", and others. Let common sense be your guide!
+
+## New Components - PRs
+* **Prerequisites**: 
+    * [Issue created](https://github.com/rackerlabs/encore-ui/issues)
+    * Link to Invision designs if these exist
+    * Screenshot in Issue of final visual design
+    * For new visual components or visual changes, sign-off from our designers is _required_. Mark issue with `Needs Design` label to request input
+    * When all technical discussion on the issue is complete, change the label to `Ready for Dev`. For visual components/changes, *only* a designer may make this change.
+    * New Components _must_ be created using our [Component Scaffolding](./guides/ui-setup.md#creating-a-new-component)
+* **Step 1**: Submitter includes screenshot of new component in PR description
+* **Step 2**: Comment with Design Sign-Off on final product - Design LGTM
+* **Step 3**: Checklist
+    * [Unit Tests](./guides/testing.md#component-tests-aka-unit-tests)
+    * [Page Objects updated](./guides/testing.md#convienience-page-objects)
+    * [Functional/Midway Tests updated](./guides/testing.md#midway-tests)
+    * [CSS Best Practices (this document needs an update)](./guides/css-styleguide.md)
+    * Component Documentation Updated (i.e. the `README.md` for the component)
+    * Encore Style Guide updated
+* **Step 4**: Comment from submitter with their verification of Checklist
+* **Step 5**: Requested Feedback:
+    * Code Review topics:
+        * CSS Best Practices (ie: LESS variables)
+        * JavaScript / Angular Best Practices
+        * Maintainability of the Code Base
+        * JavaScript Documentation
+        * Test Coverage validation
+    * Keep an eye out for Labels added by reviewers (ex. "On Hold", "Needs Design", etc.)
+    * Create an issue for non-requested feedback & tag with type
+        * Types: visual design, architecture, feature request, etc.
+        * i.e. topics outside of the scope of the PR should be left for later. If a component already has design sign-off, the PR is not the place to question the design or ask for design changes
+    * Stop the Train Criteria:
+        * Breaking Changes not previously discussed & documented
+        * New Technologies not previously discussed & documented
+        * Major visual component not approved by Design
+* **Step 6**: 2 Dev LGTM's
+* **Step 7**: Squash Commit ([see here for more details](#finalizing-a-pull-request))
+* **Step 8**: Final Travis Build Verification
+* **Step 9**: MERGE IT!
 
 ### Get feedback early and often
 
-It's much better to ask for feedback on an unfinished idea than to recieve feedback on a finished one. If you're developing a new component, or updating an old one, post code as you write it. Don't wait until the Pull Request for a code design review.
+It's much better to ask for feedback on an unfinished idea than to receive feedback on a finished one. If you're developing a new component, or updating an old one, feel free to post code as you write it. But please add "DON'T MERGE" to the title of the PR, to let people know it's not quite ready.
 
 ## EncoreUI Developer Setup
 
@@ -48,7 +92,7 @@ To sum up:
 1. Create a new branch in your local repo
 2. Commit to that branch
 3. Push branch up to Github
-4. Submit PR to for review
+4. Submit PR for review (according to guidelines above)
 5. Once reviewed and feedback given (and implemented), we will merge the branch to master
 
 ## 3rd-party Libraries
