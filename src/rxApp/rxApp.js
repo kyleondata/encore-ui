@@ -203,6 +203,24 @@ angular.module('encore.ui.rxApp', ['encore.ui.rxAppRoutes', 'encore.ui.rxEnviron
             // Remove the title attribute, as it will cause a popup to appear when hovering over page content
             // @see https://github.com/rackerlabs/encore-ui/issues/251
             element.removeAttr('title');
+
+            function isLayoutAttrib (attr) {
+                return attr.name.startsWith('layout');
+            }
+
+            // Move the specified attribute from rxPage div to page-body div
+            var pageDiv = element[0];
+            var pageBodyDiv = pageDiv.querySelector('.page-content');
+            function moveAttrib (attr) {
+                pageBodyDiv.setAttribute(attr, pageDiv.getAttribute(attr));
+                pageDiv.removeAttribute(attr);
+            }
+
+            // Relocate layout attributes
+            _(pageDiv.attributes)
+                .filter(isLayoutAttrib)
+                .pluck('name')
+                .forEach(moveAttrib);
         },
         controller: function ($scope, rxPageTitle) {
             $scope.$watch('title', function () {
