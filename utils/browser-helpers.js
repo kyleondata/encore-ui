@@ -179,3 +179,11 @@ if (!Function.prototype.bind) {
         return fBound;
     };
 }
+
+// Polyfill for String.prototype.startsWith
+if (!String.prototype.startsWith) {
+  String.prototype.startsWith = function(searchString, position) {
+    position = position || 0;
+    return this.lastIndexOf(searchString, position) === position;
+  };
+}

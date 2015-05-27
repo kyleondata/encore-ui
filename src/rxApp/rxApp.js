@@ -205,7 +205,7 @@ angular.module('encore.ui.rxApp', ['encore.ui.rxAppRoutes', 'encore.ui.rxEnviron
             element.removeAttr('title');
 
             function isLayoutAttrib (attr) {
-                return attr.name.startsWith('layout');
+                return _.isString(attr.name) && attr.name.startsWith('layout');
             }
 
             // Move the specified attribute from rxPage div to page-body div
